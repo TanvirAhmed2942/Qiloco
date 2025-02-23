@@ -85,10 +85,10 @@ p {
   background-color: #ffc301;
 } */
 
-.ant-menu-item {
-  /* background-color: #ffffff !important; */
+/* .ant-menu-item {
+  background-color: #ffffff !important;
   color: black !important;
-}
+} */
 
 .ant-menu-item-selected {
   background-color: #a11d26 !important;
@@ -98,7 +98,11 @@ p {
 .ant-menu-title-content {
   color: white !important;
 }
-
+.ant-menu-item {
+  background-color: #18191b;
+  margin: 20px 0px !important;
+  height: 50px !important;
+}
 .ant-menu .ant-menu-item .ant-menu-item-icon + span {
   transition: none !important;
 }
@@ -110,6 +114,11 @@ p {
 
 .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
   color: white !important;
+  background-color: #18191b;
+}
+.ant-menu-submenu-title {
+  background-color: #18191b;
+  height: 50px !important;
 }
 
 .ant-menu .ant-menu-title-content {
@@ -145,6 +154,7 @@ p {
 
 .ant-collapse > .ant-collapse-item {
   border-bottom: none;
+
   /* height: 90px; */
 }
 .ant-collapse
