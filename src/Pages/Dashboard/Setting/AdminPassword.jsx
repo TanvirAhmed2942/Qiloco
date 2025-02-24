@@ -42,13 +42,16 @@ function AdminPassword() {
             headerHeight: "30px",
             headerPadding: "5px",
           },
+          token: {
+            colorBgContainer: "black",
+          },
         },
       }}
     >
       <Card
         title="Change Password"
         bordered={false}
-        style={{ width: 850, height: 470 }}
+        style={{ width: 850, height: 460 }}
         className="w-full h-full flex flex-col text-white shadow-[0px_10px_100px_3px_rgba(0,_0,_0,_0.1)]"
       >
         <ConfigProvider
@@ -67,7 +70,7 @@ function AdminPassword() {
           >
             {/* Current Password */}
             <Form.Item
-              label="Current Password"
+              label={<p className="text-white">Current Password</p>}
               name="currentPassword"
               rules={[
                 {
@@ -88,7 +91,7 @@ function AdminPassword() {
 
             {/* New Password */}
             <Form.Item
-              label="New Password"
+              label={<p className="text-white">New Password</p>}
               name="newPassword"
               rules={[
                 { required: true, message: "Please enter a new password!" },
@@ -110,7 +113,7 @@ function AdminPassword() {
 
             {/* Confirm New Password */}
             <Form.Item
-              label="Confirm New Password"
+              label={<p className="text-white">Confirm New Password</p>}
               name="confirmPassword"
               dependencies={["newPassword"]}
               rules={[

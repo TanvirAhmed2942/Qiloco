@@ -55,6 +55,9 @@ textarea::placeholder {
   min-height: 60px !important;
 }
 
+.ant-card-body {
+  background-color: #232323;
+}
 /* Pagination  */
 .ant-pagination .ant-pagination-item-active {
   font-weight: 600;
