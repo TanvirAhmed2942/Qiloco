@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -34,7 +34,7 @@ function getRandomPv() {
 
 const data = generateRandomData();
 
-export default function UserStatistics() {
+export default function EarningOverview() {
   const [isDateSelected, setIsDateSelected] = useState(false);
 
   const onChange = (date, dateString) => {
@@ -45,20 +45,27 @@ export default function UserStatistics() {
   return (
     <>
       <div className="flex items-center justify-between px-6">
-        <h2 className="text-lg font-medium">Earning</h2>
+        <div className="flex items-center justify-between w-full pr-5 mb-4">
+          <h2 className="text-lg font-medium text-white">Earning Overview</h2>
+          <div className="flex  text-white gap-5">
+            <p className="font-light text-white">Monthly growth</p>
+            <span className="font-bold">35.80%</span>
+          </div>
+        </div>
+
         <DatePicker
           onChange={onChange}
           picker="year"
-          className="border-1 h-8 w-28 py-2 rounded-lg"
+          className="border-1 h-8 w-28 py-2 rounded-lg mb-4"
           suffixIcon={
             <div
               className="rounded-full w-6 h-6 p-1 flex items-center justify-center"
               style={{
-                backgroundColor: isDateSelected ? "#975cdb" : "#f5effb",
+                backgroundColor: isDateSelected ? "#232323" : "#dddddd",
               }}
             >
               <MdOutlineDateRange
-                color={isDateSelected ? "white" : "#975cdb"}
+                color={isDateSelected ? "white" : "#232323"}
               />
             </div>
           }
@@ -66,10 +73,16 @@ export default function UserStatistics() {
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
+        <AreaChart
           data={data}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
+          <defs>
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity={1} />
+              <stop offset="100%" stopColor="#151515" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid
             strokeDasharray="none"
             strokeWidth={0.2}
@@ -85,8 +98,14 @@ export default function UserStatistics() {
             cursor={false}
           />
 
-          <Bar dataKey="pv" fill="#975CDB" barSize={35} radius={4} />
-        </BarChart>
+          <Area
+            type="monotone"
+            dataKey="pv"
+            stroke=""
+            fillOpacity={1}
+            fill="url(#colorPv)"
+          />
+        </AreaChart>
       </ResponsiveContainer>
     </>
   );

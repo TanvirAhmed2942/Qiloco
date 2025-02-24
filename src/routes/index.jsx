@@ -25,6 +25,7 @@ import Customer from "../Pages/Dashboard/Customer/Customer.jsx";
 import PendingProject from "../Pages/Dashboard/Project/PendingProject/PendingProject.jsx";
 import ActiveProject from "../Pages/Dashboard/Project/ActiveProject/ActiveProject.jsx";
 import NewRequest from "../Pages/Dashboard/Project/NewRequest/NewRequest.jsx";
+import Products from "../Pages/Dashboard/Products/Products.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,8 +44,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/transaction",
-        element: <Transaction />,
+        path: "/products",
+        element: <Products />,
       },
 
       {

@@ -12,6 +12,7 @@ export default {
         dashboard: "#023f86",
         quilocoP: "#232323",
         quilocoS: "#18191b",
+        quilocoD: "#A11D26",
         paragraph: "#7E7E7E",
       },
     },

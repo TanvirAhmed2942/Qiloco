@@ -155,12 +155,20 @@ const Sidebar = ({ isCollapsed }) => {
     {
       key: "/",
       icon: <RxDashboard size={24} />,
-      label: isCollapsed ? null : <Link to="/">Overview</Link>,
+      label: isCollapsed ? (
+        <Link to="/">Overview</Link>
+      ) : (
+        <Link to="/">Overview</Link>
+      ),
     },
     {
-      key: "/transaction",
+      key: "/products",
       icon: <PiWallet size={25} />,
-      label: isCollapsed ? null : <Link to="/transaction">Transaction</Link>,
+      label: isCollapsed ? (
+        <Link to="/products"></Link>
+      ) : (
+        <Link to="/products">Products</Link>
+      ),
     },
     {
       key: "/customer",
