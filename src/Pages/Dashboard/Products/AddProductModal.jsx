@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Form, Input, Select, Button, ConfigProvider } from "antd";
 import UploadComponent from "./UploadComponent";
 
 function AddProductModal({ isModalOpen, setIsModalOpen }) {
+  const [form] = Form.useForm();
+  const [uploadedFiles, setUploadedFiles] = useState([]); // Store uploaded images
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const onFinish = (values) => {
+    console.log("Form Data:", { ...values, images: uploadedFiles }); // Include images in form data
   };
 
   return (
@@ -35,9 +42,14 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
         onCancel={handleCancel}
         footer={null}
       >
-        <Form layout="vertical" className="flex flex-col">
+        <Form
+          form={form}
+          layout="vertical"
+          className="flex flex-col"
+          onFinish={onFinish}
+        >
           {/* Two Sections Side by Side */}
-          <div className="flex  gap-4">
+          <div className="flex gap-4">
             {/* Left Section */}
             <div className="w-1/2 bg-transparent p-4 rounded-md">
               <Form.Item
@@ -99,7 +111,8 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
 
             {/* Right Section (Upload) */}
             <div className="w-1/2">
-              <UploadComponent />
+              <UploadComponent onFileUpload={setUploadedFiles} />{" "}
+              {/* Receive uploaded images */}
             </div>
           </div>
 

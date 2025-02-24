@@ -15,6 +15,9 @@ export default {
         quilocoD: "#A11D26",
         paragraph: "#7E7E7E",
       },
+      fontFamily: {
+        sans: ["Raleway", "Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [],

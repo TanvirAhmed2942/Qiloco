@@ -24,9 +24,10 @@ function Setting() {
       theme={{
         components: {
           Tabs: {
-            inkBarColor: "#975cdb",
-            itemHoverColor: "black",
-            itemSelectedColor: "#975cdb",
+            itemColor: "white",
+            inkBarColor: "#a11d26",
+            itemHoverColor: "white",
+            itemSelectedColor: "#a11d26",
             titleFontSize: "18px",
             horizontalMargin: "0 0 30px 0",
           },
@@ -37,7 +38,7 @@ function Setting() {
         defaultActiveKey="1"
         items={items}
         onChange={onChange}
-        className="px-10 py-5 font-medium"
+        className="px-10 py-5 font-medium "
       />
     </ConfigProvider>
   );

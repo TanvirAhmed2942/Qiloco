@@ -38,7 +38,7 @@ function AdminPassword() {
       theme={{
         components: {
           Card: {
-            headerBg: "#975cdb",
+            headerBg: "#a11d26",
             headerHeight: "30px",
             headerPadding: "5px",
           },

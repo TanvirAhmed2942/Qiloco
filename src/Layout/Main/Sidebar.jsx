@@ -132,12 +132,13 @@ import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { TbBellBolt, TbDashboard } from "react-icons/tb";
+import { TbBellBolt, TbDashboard, TbListDetails } from "react-icons/tb";
 import { RxDashboard } from "react-icons/rx";
 import { PiWallet } from "react-icons/pi";
 import { FiLogOut, FiUsers } from "react-icons/fi";
-import { RiSettings5Line } from "react-icons/ri";
+import { RiMoneyDollarCircleLine, RiSettings5Line } from "react-icons/ri";
 import qilocoLogo from "../../assets/quiloco/qilocoLogo.png";
+import { LuBoxes } from "react-icons/lu";
 
 const Sidebar = ({ isCollapsed }) => {
   const location = useLocation();
@@ -163,7 +164,7 @@ const Sidebar = ({ isCollapsed }) => {
     },
     {
       key: "/products",
-      icon: <PiWallet size={25} />,
+      icon: <LuBoxes size={25} />,
       label: isCollapsed ? (
         <Link to="/products"></Link>
       ) : (
@@ -171,51 +172,50 @@ const Sidebar = ({ isCollapsed }) => {
       ),
     },
     {
-      key: "/customer",
-      icon: <FiUsers size={23} />,
-      label: isCollapsed ? null : <Link to="/customer">Customer</Link>,
-    },
-    {
-      key: "/pushnotification",
-      icon: <TbBellBolt size={24} />,
-      label: isCollapsed ? null : (
-        <Link to="/pushnotification">PushNotification</Link>
+      key: "/orderdetails",
+      icon: <TbListDetails size={25} />,
+      label: isCollapsed ? (
+        <Link to="/orderdetails">Order Details</Link>
+      ) : (
+        <Link to="/orderdetails">Order Details</Link>
       ),
     },
     {
+      key: "/earnings",
+      icon: <RiMoneyDollarCircleLine size={25} />,
+      label: isCollapsed ? (
+        <Link to="/earnings">Earnings</Link>
+      ) : (
+        <Link to="/earnings">Earnings</Link>
+      ),
+    },
+    // {
+    //   key: "/pushnotification",
+    //   icon: <TbBellBolt size={24} />,
+    //   label: isCollapsed ? null : (
+    //     <Link to="/pushnotification">PushNotification</Link>
+    //   ),
+    // },
+    {
       key: "subMenuSetting1",
       icon: <RiSettings5Line size={23} />,
-      label: isCollapsed ? null : "Project",
+      label: isCollapsed ? null : "Settings",
       children: isCollapsed
         ? []
         : [
             {
-              key: "/newrequest",
+              key: "/returnpolicy",
               label: (
-                <Link to="/newrequest" className="text-white">
-                  New Request
+                <Link to="/returnpolicy" className="text-white">
+                  Return Policy
                 </Link>
               ),
             },
             {
-              key: "/activeproject",
+              key: "/privacypolicy",
               label: (
-                <Link
-                  to="/activeproject"
-                  className="text-white hover:text-white"
-                >
-                  Active Project
-                </Link>
-              ),
-            },
-            {
-              key: "/pendingproject",
-              label: (
-                <Link
-                  to="/pendingproject"
-                  className="text-white hover:text-white"
-                >
-                  Pending Project
+                <Link to="/privacypolicy" className="text-white">
+                  Privacy Policy
                 </Link>
               ),
             },

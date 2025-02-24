@@ -12,24 +12,24 @@ const ForgotPassword = () => {
   return (
     <div>
       <div className="text-center mb-8">
-        <h1 className="text-[25px] font-semibold mb-6">Forgot Password</h1>
-        <p className="w-[90%] mx-auto text-base">
+        <h1 className="text-[25px] text-white font-semibold mb-6">
+          Forgot Password
+        </h1>
+        <p className="w-[90%] text-[#C0C7CA] mx-auto text-base">
           Enter your email below to reset your password
         </p>
       </div>
 
       <ConfigProvider
         theme={{
-          components: {
-            Form: {
-              labelColor: "black",
-            },
+          token: {
+            colorText: "white",
           },
         }}
       >
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
-            label={<p className="text-base font-normal">Email</p>}
+            label={<p className="text-base text-white font-normal">Email</p>}
             name="email"
             id="email"
             rules={[
@@ -43,9 +43,11 @@ const ForgotPassword = () => {
               placeholder="Enter your email address"
               style={{
                 height: 45,
-                border: "1px solid #d9d9d9",
+                // border: "1px solid #d9d9d9",
+                border: "none",
                 outline: "none",
                 boxShadow: "none",
+                background: "#18191b",
               }}
             />
           </Form.Item>
@@ -63,9 +65,9 @@ const ForgotPassword = () => {
 
                 marginTop: 20,
               }}
-              className="flex items-center justify-center bg-prince rounded-lg"
+              className="flex items-center justify-center bg-quilocoD hover:bg-quilocoD/90 rounded-lg"
             >
-              Send OTP
+              Send Code
             </button>
           </Form.Item>
         </Form>

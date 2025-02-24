@@ -26,6 +26,8 @@ import PendingProject from "../Pages/Dashboard/Project/PendingProject/PendingPro
 import ActiveProject from "../Pages/Dashboard/Project/ActiveProject/ActiveProject.jsx";
 import NewRequest from "../Pages/Dashboard/Project/NewRequest/NewRequest.jsx";
 import Products from "../Pages/Dashboard/Products/Products.jsx";
+import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
+import Earnings from "../Pages/Dashboard/Earnings/Earnings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,13 +51,13 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/customer",
-        element: <Customer />,
+        path: "/orderdetails",
+        element: <OrderDetails />,
       },
-      // {
-      //   path: "/slider",
-      //   element: <Slider />,
-      // },
+      {
+        path: "/earnings",
+        element: <Earnings />,
+      },
 
       {
         path: "/faq",

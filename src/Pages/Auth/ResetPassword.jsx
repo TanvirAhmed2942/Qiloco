@@ -13,13 +13,19 @@ const ResetPassword = () => {
   return (
     <div>
       <div className="text-center mb-12">
-        <h1 className="text-[25px] font-semibold mb-6">Reset Password</h1>
+        <h1 className="text-[25px] text-white font-semibold mb-6">
+          Set a new password
+        </h1>
+        <p className="text-[#C0C7CA] text-[18px]">
+          Create a new password. Ensure it differs
+          <br /> from previous ones for security.
+        </p>
       </div>
       <ConfigProvider
         theme={{
           components: {
             Form: {
-              labelColor: "black",
+              labelColor: "white",
             },
           },
         }}
@@ -33,7 +39,7 @@ const ResetPassword = () => {
                   display: "block",
                 }}
                 htmlFor="email"
-                className="text-base font-normal text-black"
+                className="text-base font-normal text-white"
               >
                 New Password
               </p>
@@ -50,11 +56,12 @@ const ResetPassword = () => {
               type="password"
               placeholder="Enter New password"
               style={{
-                border: "1px solid #E0E4EC",
+                // border: "1px solid #E0E4EC",
+                border: "none",
                 height: "52px",
-                background: "white",
+                background: "#18191b",
                 borderRadius: "8px",
-
+                color: "white",
                 outline: "none",
               }}
               className="mb-6"
@@ -69,7 +76,7 @@ const ResetPassword = () => {
                   display: "block",
                 }}
                 htmlFor="email"
-                className="text-base text-black font-normal"
+                className="text-base text-white font-normal"
               >
                 Confirm Password
               </p>
@@ -98,9 +105,11 @@ const ResetPassword = () => {
               type="password"
               placeholder="Enter Confirm password"
               style={{
-                border: "1px solid #E0E4EC",
+                // border: "1px solid #E0E4EC",
+                color: "white",
+                border: "none",
                 height: "52px",
-                background: "white",
+                background: "#18191b",
                 borderRadius: "8px",
                 outline: "none",
               }}
@@ -117,8 +126,8 @@ const ResetPassword = () => {
                 color: "white",
                 fontWeight: "400px",
                 fontSize: "18px",
-                border: "1px solid #975cdb",
-                background: "#975cdb ",
+                border: "1px solid #a11d26",
+                background: "#a11d26 ",
                 marginTop: 20,
               }}
             >
