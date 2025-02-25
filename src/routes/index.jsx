@@ -3,7 +3,7 @@ import Auth from "../Layout/Auth/Auth";
 import Main from "../Layout/Main/Main";
 import Home from "../Pages/Dashboard/Home/Home";
 
-import ChangePassword from "../Pages/Auth/ChangePassword";
+// import ChangePassword from "../Pages/Auth/ChangePassword";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import VerifyOtp from "../Pages/Auth/VerifyOtp";
@@ -13,14 +13,10 @@ import Notifications from "../Pages/Dashboard/Notifications";
 
 import AdminProfile from "../Pages/Dashboard/AdminProfile/AdminProfile";
 
-import TermsAndCondition from "../Pages/Dashboard/TermsAndCondition/TermsAndCondition";
-import ServiceProvidersList from "../Pages/Dashboard/ServiceProvider/ServiceProvidersList.jsx";
-import Transaction from "../Pages/Dashboard/Transaction/Transaction.jsx";
+// import TermsAndCondition from "../Pages/Dashboard/TermsAndCondition/TermsAndCondition";
+// import ServiceProvidersList from "../Pages/Dashboard/ServiceProvider/ServiceProvidersList.jsx";
+// import Transaction from "../Pages/Dashboard/Transaction/Transaction.jsx";
 import Setting from "../Pages/Dashboard/Setting/Setting.jsx";
-import FaqCollapse from "../Pages/Dashboard/FAQ/FaqCollapse.jsx";
-import Contact from "../Pages/Dashboard/Contact/Contact.jsx";
-
-import Customer from "../Pages/Dashboard/Customer/Customer.jsx";
 
 import Products from "../Pages/Dashboard/Products/Products.jsx";
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
@@ -39,10 +35,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
 
-      {
-        path: "/serviceproviders",
-        element: <ServiceProvidersList />,
-      },
+      // {
+      //   path: "/serviceproviders",
+      //   element: <ServiceProvidersList />,
+      // },
 
       {
         path: "/products",
@@ -67,10 +63,10 @@ const router = createBrowserRouter([
         element: <PrivacyPolicy />,
       },
 
-      {
-        path: "/terms-and-conditions",
-        element: <TermsAndCondition />,
-      },
+      // {
+      //   path: "/terms-and-conditions",
+      //   element: <TermsAndCondition />,
+      // },
 
       {
         path: "/profile",

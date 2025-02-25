@@ -119,7 +119,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         <div className="absolute w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-prince -left-2"></div>
 
         {/* Tooltip Content */}
-        <div className="bg-prince p-2 text-white rounded shadow-md ">
+        <div className="bg-white p-2 text-black rounded shadow-md ">
           {payload.map((pld, index) => (
             <div key={index}>{pld.value}K</div>
           ))}

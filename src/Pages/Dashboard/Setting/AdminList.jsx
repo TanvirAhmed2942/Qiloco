@@ -165,21 +165,27 @@ const AdminList = () => {
       />
 
       {/* Add Admin Modal */}
-      <Modal
-        title="Add Admin"
-        open={isAddModalOpen}
-        onCancel={handleCancelAdd}
-        footer={null}
-        className="z-50"
-      >
-        <ConfigProvider
-          theme={{
-            components: {
-              Form: {
-                labelFontSize: 16,
-              },
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: "#353536",
+              headerBg: "#353536",
+              titleColor: "#ffffff",
+              titleFontSize: 24,
             },
-          }}
+            Form: {
+              labelFontSize: 16,
+              labelColor: "#ffffff",
+            },
+          },
+        }}
+      >
+        <Modal
+          title="Add Admin"
+          open={isAddModalOpen}
+          onCancel={handleCancelAdd}
+          footer={null}
         >
           <Form layout="vertical" ref={addFormRef} onFinish={handleAddAdmin}>
             <Form.Item
@@ -187,7 +193,15 @@ const AdminList = () => {
               name="name"
               rules={[{ required: true, message: "Please enter Name" }]}
             >
-              <Input placeholder="Name" className="h-12" />
+              <Input
+                placeholder="Name"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
             <Form.Item
               label="Email"
@@ -214,16 +228,47 @@ const AdminList = () => {
                 },
               ]}
             >
-              <Input placeholder="Email" className="h-12" />
+              <Input
+                placeholder="Email"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
             <Form.Item
               label="Role"
               name="role"
               rules={[{ required: true, message: "Please enter Role" }]}
             >
-              <Input placeholder="Role" className="h-12" />
+              <Input
+                disabled={true}
+                placeholder="Role"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
-
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[{ required: true, message: "Please enter Password" }]}
+            >
+              <Input.Password
+                placeholder="**********"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
+            </Form.Item>
             <div className="flex justify-end gap-4 mt-4">
               <ButtonEDU actionType="cancel" onClick={handleCancelAdd} />
               <ButtonEDU
@@ -232,25 +277,41 @@ const AdminList = () => {
               />
             </div>
           </Form>
-        </ConfigProvider>
-      </Modal>
-
+        </Modal>
+      </ConfigProvider>
       {/* Edit Admin Modal */}
-      <Modal
-        title="Edit Admin"
-        open={isEditModalOpen}
-        onCancel={handleCancelEdit}
-        footer={null}
-        className="z-50"
-      >
-        <ConfigProvider
-          theme={{
-            components: {
-              Form: {
-                labelFontSize: 16,
-              },
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: "#232323",
+              headerBg: "#232323",
+              titleColor: "#ffffff",
+              titleFontSize: 24,
             },
-          }}
+            Form: {
+              labelColor: "#efefef",
+              labelFontSize: 16,
+            },
+            Select: {
+              selectorBg: "black",
+              activeOutlineColor: "grey",
+              optionSelectedBg: "grey",
+              multipleItemBorderColor: "grey",
+              activeBorderColor: "grey",
+              hoverBorderColor: "grey",
+            },
+          },
+        }}
+      >
+        <Modal
+          title="Edit Admin"
+          open={isEditModalOpen}
+          onCancel={handleCancelEdit}
+          footer={null}
+          height="none"
+          className="z-50 "
+          style={{ background: "#18191b" }}
         >
           <Form layout="vertical" ref={editFormRef} onFinish={handleEditAdmin}>
             <Form.Item
@@ -258,7 +319,15 @@ const AdminList = () => {
               name="name"
               rules={[{ required: true, message: "Please enter Name" }]}
             >
-              <Input placeholder="Name" className="h-12" />
+              <Input
+                placeholder="Name"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
             <Form.Item
               label="Email"
@@ -285,14 +354,31 @@ const AdminList = () => {
                 },
               ]}
             >
-              <Input placeholder="Email" className="h-12" />
+              <Input
+                placeholder="Email"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
             <Form.Item
               label="Role"
               name="role"
               rules={[{ required: true, message: "Please enter Role" }]}
             >
-              <Input placeholder="Role" className="h-12" />
+              <Input
+                disabled={true}
+                placeholder="Role"
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
+              />
             </Form.Item>
 
             <div className="flex justify-end gap-4 mt-4">
@@ -303,24 +389,24 @@ const AdminList = () => {
               />
             </div>
           </Form>
-        </ConfigProvider>
-      </Modal>
+        </Modal>
 
-      {/* Delete Admin Modal */}
-      <Modal
-        title="Delete Admin"
-        open={isDeleteModalOpen}
-        onCancel={() => setIsDeleteModalOpen(false)}
-        footer={null}
-        centered
-        className="z-50"
-      >
-        <DeleteAdmin
-          name={selectedAdmin?.name}
-          onConfirm={handleConfirmDelete}
+        {/* Delete Admin Modal */}
+        <Modal
+          title="Delete Admin"
+          open={isDeleteModalOpen}
           onCancel={() => setIsDeleteModalOpen(false)}
-        />
-      </Modal>
+          footer={null}
+          centered
+          className="z-50"
+        >
+          <DeleteAdmin
+            name={selectedAdmin?.name}
+            onConfirm={handleConfirmDelete}
+            onCancel={() => setIsDeleteModalOpen(false)}
+          />
+        </Modal>
+      </ConfigProvider>
     </div>
   );
 };
@@ -331,22 +417,45 @@ const TableHead = ({ searchText, handleSearch, onAdd }) => {
         placeholder="Search admins..."
         value={searchText}
         onChange={handleSearch}
-        className="w-1/3"
+        className="w-1/3 h-10 text-white focus:ring-0 focus:outline-none"
+        style={{
+          backgroundColor: "#18191b", // Keeps it black even after blur
+          color: "white",
+          border: "1px solid #555",
+        }}
       />
-      <ButtonEDU actionType="save" icon={<FaPlus />} onClick={onAdd}>
+      <ButtonEDU actionType="add new" icon={<FaPlus />} onClick={onAdd}>
         Add Admin
       </ButtonEDU>
     </div>
   );
 };
 const TableBody = ({ filteredData, onEdit, onDelete }) => (
-  <Table
-    rowKey={(record) => record.key}
-    columns={columns(onEdit, onDelete)}
-    dataSource={filteredData}
-    pagination={false}
-    className="mt-5"
-  />
+  <ConfigProvider
+    theme={{
+      components: {
+        Table: {
+          headerBg: "#575858",
+          headerSplitColor: "none",
+          headerColor: "white",
+          borderColor: "#A3A3A3",
+          colorBgContainer: "#3a3a3a",
+          rowHoverBg: "#4a4a4a",
+          colorText: "white",
+        },
+      },
+    }}
+  >
+    <div className="custom-table">
+      <Table
+        rowKey={(record) => record.key}
+        columns={columns(onEdit, onDelete)}
+        dataSource={filteredData}
+        pagination={false}
+        className="mt-5"
+      />
+    </div>
+  </ConfigProvider>
 );
 
 const DeleteAdmin = ({ name, onConfirm, onCancel }) => (
@@ -356,7 +465,7 @@ const DeleteAdmin = ({ name, onConfirm, onCancel }) => (
     className="w-full h-full mb-3 mt-3"
     gap={20}
   >
-    <Flex align="center" justify="center">
+    <Flex align="center" justify="center" className="text-slate-50">
       Are you sure you want to delete{" "}
       <span className="font-bold ml-1">{name}</span>?
     </Flex>

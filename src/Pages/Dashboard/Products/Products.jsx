@@ -72,7 +72,7 @@ function Products() {
           <Table
             dataSource={filteredData}
             columns={columns}
-            pagination={false}
+            pagination={true}
 
             // rowClassName={() => "bg-gray-700 text-white"}
           />

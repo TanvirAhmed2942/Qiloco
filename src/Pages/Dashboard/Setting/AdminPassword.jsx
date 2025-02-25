@@ -82,10 +82,15 @@ function AdminPassword() {
             >
               <Input.Password
                 placeholder="Enter current password"
-                className="h-12"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
               />
             </Form.Item>
 
@@ -104,10 +109,15 @@ function AdminPassword() {
             >
               <Input.Password
                 placeholder="Enter new password"
-                className="h-12"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
               />
             </Form.Item>
 
@@ -134,10 +144,15 @@ function AdminPassword() {
             >
               <Input.Password
                 placeholder="Confirm new password"
-                className="h-12"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
+                className="h-12 text-slate-50 hover:border-slate-300 focus:ring-0 focus:outline-none"
+                style={{
+                  backgroundColor: "black", // Ensures background stays black
+                  color: "white",
+                  border: "1px solid #555",
+                }}
               />
             </Form.Item>
 

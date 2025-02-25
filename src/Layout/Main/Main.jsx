@@ -18,7 +18,7 @@ const Main = () => {
       {/* Main Content */}
       <div className="flex flex-col flex-1 transition-all duration-300">
         <Header toggleSidebar={toggleSidebar} />
-        <div className="p-4 bg-quilocoS h-screen">
+        <div className="p-4 bg-quilocoS h-screen sm:h-screen">
           <Outlet />
         </div>
       </div>
