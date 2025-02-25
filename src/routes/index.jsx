@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Auth from "../Layout/Auth/Auth";
 import Main from "../Layout/Main/Main";
 import Home from "../Pages/Dashboard/Home/Home";
-import PrivacyPolicy from "../Pages/Dashboard/PrivacyPolicy/PrivacyPolicy.jsx";
+
 import ChangePassword from "../Pages/Auth/ChangePassword";
 import Login from "../Pages/Auth/Login";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
@@ -22,12 +22,11 @@ import Contact from "../Pages/Dashboard/Contact/Contact.jsx";
 
 import Customer from "../Pages/Dashboard/Customer/Customer.jsx";
 
-import PendingProject from "../Pages/Dashboard/Project/PendingProject/PendingProject.jsx";
-import ActiveProject from "../Pages/Dashboard/Project/ActiveProject/ActiveProject.jsx";
-import NewRequest from "../Pages/Dashboard/Project/NewRequest/NewRequest.jsx";
 import Products from "../Pages/Dashboard/Products/Products.jsx";
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
 import Earnings from "../Pages/Dashboard/Earnings/Earnings.jsx";
+import ReturnPolicy from "../Pages/Dashboard/Policy/ReturnPolicy.jsx";
+import PrivacyPolicy from "../Pages/Dashboard/Policy/PrivacyPolicy.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/orderdetails",
+        path: "/orderDetails",
         element: <OrderDetails />,
       },
       {
@@ -60,18 +59,14 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/faq",
-        element: <FaqCollapse />,
+        path: "/returnPolicy",
+        element: <ReturnPolicy />,
       },
       {
-        path: "/contact",
-        element: <Contact />,
-      },
-
-      {
-        path: "/privacy-policy",
+        path: "/privacyPolicy",
         element: <PrivacyPolicy />,
       },
+
       {
         path: "/terms-and-conditions",
         element: <TermsAndCondition />,
@@ -89,18 +84,6 @@ const router = createBrowserRouter([
       {
         path: "/setting",
         element: <Setting />,
-      },
-      {
-        path: "/newrequest",
-        element: <NewRequest />,
-      },
-      {
-        path: "/activeproject",
-        element: <ActiveProject />,
-      },
-      {
-        path: "/pendingproject",
-        element: <PendingProject />,
       },
     ],
   },

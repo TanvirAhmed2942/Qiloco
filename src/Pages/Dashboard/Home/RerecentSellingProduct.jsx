@@ -107,8 +107,12 @@ function RecentSellingProduct() {
         components: {
           Table: {
             headerBg: "#575858",
-            headerColor: "#F8FAFC",
             headerSplitColor: "none",
+            headerColor: "white",
+            borderColor: "#A3A3A3",
+            colorBgContainer: "#3a3a3a",
+            rowHoverBg: "#4a4a4a",
+            colorText: "white",
           },
         },
       }}

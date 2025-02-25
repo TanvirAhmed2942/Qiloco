@@ -40,6 +40,13 @@ textarea::placeholder {
   cursor: pointer;
   transition: all 0.3s;
 }
+
+.ant-modal .ant-modal-close {
+  color: #ffffff !important;
+}
+.ant-modal .ant-modal-close:hover {
+  background-color: #a11d26;
+}
 /* Avatar */
 .ant-space-gap-col-small {
   column-gap: 12px;
@@ -216,10 +223,14 @@ textarea::placeholder {
   color: "#929394";
 }
 
-.ant-table-row * {
+/* .ant-table-row {
   background-color: #232323;
   color: #f7f7f7;
 }
+.ant-table-row:hover {
+  background-color: #232323;
+  color: #f7f7f7;
+} */
 
 .ant-upload-wrapper.ant-upload-picture-card-wrapper
   .ant-upload.ant-upload-select {
@@ -249,9 +260,7 @@ textarea::placeholder {
   color: black !important;
   border: none !important;
 }
-.ant-table-row:nth-child(even) {
-  background-color: #f7f7f7;
-}
+
 .ant-steps
   .ant-steps-item-finish
   > .ant-steps-item-container
@@ -269,4 +278,73 @@ textarea::placeholder {
 
 .ant-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
   color: #975cdb;
+}
+
+.ant-select-selection-item {
+  color: white !important;
+}
+.ant-select-selection-item-remove {
+  color: white !important;
+}
+.ant-select-selection-placeholder {
+  color: #808080 !important;
+}
+.ant-select-arrow {
+  color: white !important;
+}
+
+.ant-select-selector {
+  height: 48px !important;
+  border: none !important;
+}
+.anticon-check {
+  color: #000;
+}
+
+.ant-upload {
+  background-color: #000 !important;
+  border-radius: 8px;
+}
+
+:where(
+    .css-dev-only-do-not-override-1ao7x06
+  ).ant-upload-wrapper.ant-upload-picture-card-wrapper
+  .ant-upload.ant-upload-select,
+:where(
+    .css-dev-only-do-not-override-1ao7x06
+  ).ant-upload-wrapper.ant-upload-picture-circle-wrapper
+  .ant-upload.ant-upload-select {
+  text-align: center;
+  vertical-align: top;
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 2px dashed #808080;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+/* /////////// */
+.custom-table .ant-table {
+  border-radius: 10px; /* Adjust as needed */
+  overflow: hidden; /* Ensures inner content respects border-radius */
+}
+
+.custom-table .ant-table-container {
+  border-radius: 10px;
+}
+
+.custom-table .ant-table-thead > tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.custom-table .ant-table-thead > tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.custom-table .ant-table-tbody > tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.custom-table .ant-table-tbody > tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
 }

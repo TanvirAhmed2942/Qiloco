@@ -136,7 +136,7 @@
 //   },
 // ];
 import React, { useState } from "react";
-import { Table, Avatar } from "antd";
+import { Table, Avatar, ConfigProvider } from "antd";
 import { IoEye } from "react-icons/io5";
 import OrderDetailsModal from "./OrderDetailsModal";
 
@@ -190,6 +190,21 @@ function OrderDetails() {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (_, record) => (
+        <p
+          className={
+            record.status === "Delivered"
+              ? "text-green-400"
+              : record.status === "Pending"
+              ? "text-[#bef310]"
+              : record.status === "Processing"
+              ? "text-red-400"
+              : "text-sky-400"
+          }
+        >
+          {record.status}
+        </p>
+      ),
     },
     {
       title: "Action",
@@ -211,8 +226,30 @@ function OrderDetails() {
 
   return (
     <>
-      <div>
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
+      <div className="px-3 py-4">
+        <ConfigProvider
+          theme={{
+            components: {
+              Table: {
+                headerBg: "#575858",
+                headerSplitColor: "none",
+                headerColor: "white",
+                borderColor: "#A3A3A3",
+                colorBgContainer: "#3a3a3a",
+                rowHoverBg: "#4a4a4a",
+                colorText: "white",
+              },
+            },
+          }}
+        >
+          <div className="custom-table">
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={true}
+            />
+          </div>
+        </ConfigProvider>
       </div>
       {selectedOrder && (
         <OrderDetailsModal

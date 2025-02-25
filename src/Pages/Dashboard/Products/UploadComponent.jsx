@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Upload, Image, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { AiOutlineDelete } from "react-icons/ai";
+import { RiUploadCloud2Line } from "react-icons/ri";
 
 const UploadComponent = ({ onFileUpload }) => {
   const [fileList, setFileList] = useState([]);
@@ -18,15 +19,19 @@ const UploadComponent = ({ onFileUpload }) => {
   };
 
   const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
+    <div className="text-[#575858] flex flex-col items-center justify-center">
+      <RiUploadCloud2Line size={30} />
+      <div className=" mt-3 leading-4">
+        Drop your imager here, or browse
+        <br /> Jpeg, png are allowed
+      </div>
     </div>
   );
 
   return (
     <div>
       {/* Upload Component */}
+
       <Upload
         action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
         listType="picture-card"
@@ -34,6 +39,7 @@ const UploadComponent = ({ onFileUpload }) => {
         onChange={handleChange}
         showUploadList={false} // Hide default upload list
         beforeUpload={() => false} // Prevent automatic upload
+        style={{ background: "black", color: "white" }}
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>

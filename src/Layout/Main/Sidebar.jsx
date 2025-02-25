@@ -172,12 +172,12 @@ const Sidebar = ({ isCollapsed }) => {
       ),
     },
     {
-      key: "/orderdetails",
+      key: "/orderDetails",
       icon: <TbListDetails size={25} />,
       label: isCollapsed ? (
-        <Link to="/orderdetails">Order Details</Link>
+        <Link to="/orderDetails">Order Details</Link>
       ) : (
-        <Link to="/orderdetails">Order Details</Link>
+        <Link to="/orderDetails">Order Details</Link>
       ),
     },
     {
@@ -204,17 +204,17 @@ const Sidebar = ({ isCollapsed }) => {
         ? []
         : [
             {
-              key: "/returnpolicy",
+              key: "/returnPolicy",
               label: (
-                <Link to="/returnpolicy" className="text-white">
+                <Link to="/returnPolicy" className="text-white">
                   Return Policy
                 </Link>
               ),
             },
             {
-              key: "/privacypolicy",
+              key: "/privacyPolicy",
               label: (
-                <Link to="/privacypolicy" className="text-white">
+                <Link to="/privacyPolicy" className="text-white">
                   Privacy Policy
                 </Link>
               ),

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { LuArrowLeftRight } from "react-icons/lu";
-import { Table } from "antd";
+import { Table, ConfigProvider } from "antd";
 import { IoEye } from "react-icons/io5";
 import TransactionDetailsModal from "./TransactionDetailsModal";
 function Earnings() {
   return (
-    <div>
+    <div className="px-3">
       <div className="w-[576px] h-14 flex justify-between my-4">
         <div className="bg-[#121314] text-white flex items-center justify-evenly w-[278px] h-full rounded-lg">
           <LuArrowLeftRight size={25} />
@@ -80,7 +80,25 @@ const EarningsTable = () => {
   ];
   return (
     <div>
-      <Table columns={columns} dataSource={rawData} />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#575858",
+              headerSplitColor: "none",
+              headerColor: "white",
+              borderColor: "#A3A3A3",
+              colorBgContainer: "#3a3a3a",
+              rowHoverBg: "#4a4a4a",
+              colorText: "white",
+            },
+          },
+        }}
+      >
+        <div className="custom-table">
+          <Table columns={columns} dataSource={rawData} pagination />
+        </div>
+      </ConfigProvider>
       <TransactionDetailsModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

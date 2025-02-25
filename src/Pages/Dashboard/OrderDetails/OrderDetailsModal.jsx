@@ -19,8 +19,8 @@ function OrderDetailsModal({ isModalOpen, setIsModalOpen, data }) {
       theme={{
         components: {
           Modal: {
-            contentBg: "#232323",
-            headerBg: "#232323",
+            contentBg: "#353536",
+            headerBg: "#353536",
             titleColor: "#ffffff",
             titleFontSize: 24,
           },
@@ -34,13 +34,14 @@ function OrderDetailsModal({ isModalOpen, setIsModalOpen, data }) {
       <Modal
         title="View Details"
         open={isModalOpen}
+        centered
         onOk={handleOk}
         width={1000}
-        height={1000}
+        height={500}
         onCancel={handleCancel}
         footer={null}
       >
-        <div className="flex justify-between ">
+        <div className="flex justify-between mt-4 ">
           <div className="flex flex-col gap-3">
             <div className="flex gap-4 items-center text-white">
               <h3>
@@ -99,7 +100,7 @@ export default OrderDetailsModal;
 
 const PaymentInfo = (data) => {
   return (
-    <div className="flex flex-col gap-2 my-3">
+    <div className="flex flex-col gap-2 my-3 ">
       <h5 className="text-lime-700 font-bold">Payment Info</h5>
       <div className="flex gap-3">
         <img src={paycard} />
@@ -115,19 +116,36 @@ const PaymentInfo = (data) => {
 
 const OrderDeitailsTable = (data) => {
   return (
-    <>
-      <Table
-        columns={columns}
-        dataSource={dataSource}
-        pagination={false}
-        showHeader={false}
-      />
-      <div className="flex justify-end pr-28 w-full ">
-        <p className="text-white">
-          Total<span className="font-sans ml-24">$ {8554}</span>
+    <div className="">
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#353536",
+              headerSplitColor: "none",
+              headerColor: "white",
+              borderColor: "#A3A3A3",
+              colorBgContainer: "#353536",
+              rowHoverBg: "#4a4a4a",
+              colorText: "white",
+              headerBorderRadius: "none",
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+          showHeader={false}
+        />
+      </ConfigProvider>
+      <div className="flex justify-end  w-full my-4 ">
+        <p className="text-amber-400 mr-28">
+          Total<span className="font-sans ml-20">$ {8554}</span>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 const dataSource = [

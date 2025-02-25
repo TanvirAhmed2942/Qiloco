@@ -2,10 +2,22 @@ import React from "react";
 import EarningOverview from "./EarningOverview";
 import MonthlySale from "./MonthlySale";
 import RerecentSellingProduct from "./RerecentSellingProduct";
+import { LiaUsersSolid } from "react-icons/lia";
+import { PiCurrencyCircleDollarBold } from "react-icons/pi";
 
 const stats = [
-  { label: "Total User", value: "518", icon: "", bg: "bg-quilocoS" },
-  { label: "Total Earning", value: `$${78464}`, icon: "", bg: "bg-quilocoS" },
+  {
+    label: "Total User",
+    value: "518",
+    icon: <LiaUsersSolid size={60} className="text-white" />,
+    bg: "bg-quilocoS",
+  },
+  {
+    label: "Total Earning",
+    value: `$${78464}`,
+    icon: <PiCurrencyCircleDollarBold size={60} className="text-white" />,
+    bg: "bg-quilocoS",
+  },
 ];
 
 const Card = ({ item }) => (
@@ -13,7 +25,7 @@ const Card = ({ item }) => (
     <div
       className={`${item.bg} w-20 h-20 flex items-center justify-center rounded-full`}
     >
-      {item.icon && <img src={item.icon} width={32} alt={item.label} />}
+      {item.icon}
     </div>
     <div className="flex flex-col">
       <h1 className="text-[24px] text-white font-normal mb-1">{item.label}</h1>
@@ -23,7 +35,7 @@ const Card = ({ item }) => (
 );
 
 const Home = () => (
-  <div className="px-5">
+  <div className="px-3">
     <div className="flex flex-col flex-wrap items-end gap-5 justify-between w-full bg-transparent rounded-md">
       <div className="flex items-center justify-between flex-wrap lg:flex-nowrap gap-5 w-full">
         {stats.map((item, index) => (
@@ -42,7 +54,15 @@ const Home = () => (
         <h3 className="text-white text-[24px] font-bold mb-2">
           Recent Selling Products
         </h3>
-        <div className="h-60 overflow-y-scroll rounded-lg bg-quilocoP">
+        <div
+          className="h-60 overflow-y-scroll rounded-lg bg-quilocoP [&::-webkit-scrollbar]:w-2
+                    [&::-webkit-scrollbar-track]:rounded-full
+                    [&::-webkit-scrollbar-track]:bg-gray-100
+                    [&::-webkit-scrollbar-thumb]:rounded-full
+                    [&::-webkit-scrollbar-thumb]:bg-gray-300
+                    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+        >
           <RerecentSellingProduct />
         </div>
       </div>

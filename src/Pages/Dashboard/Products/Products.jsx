@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Avatar } from "antd";
+import { Table, Avatar, ConfigProvider } from "antd";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoEye } from "react-icons/io5";
 import AddProductModal from "./AddProductModal";
@@ -15,12 +15,20 @@ function Products() {
   }));
   const [selected, setSelected] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const filteredData = rawData
+    .filter((item) => selected === "All" || item.filter === selected)
+    .map((item) => ({
+      ...item,
+      serial: `#${item.serial}`,
+    }));
+
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   return (
-    <div className="px-5">
+    <div className="px-3 py-4">
       <div className="text-white flex justify-between">
         <div className=" flex gap-4 h-12 mb-4">
           {buttonItem.map((item) => (
@@ -45,12 +53,35 @@ function Products() {
           Add New Product
         </button>
       </div>
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: "#575858",
+              headerSplitColor: "none",
+              headerColor: "white",
+              borderColor: "#A3A3A3",
+              colorBgContainer: "#3a3a3a",
+              rowHoverBg: "#4a4a4a",
+              colorText: "white",
+            },
+          },
+        }}
+      >
+        <div className="custom-table">
+          <Table
+            dataSource={filteredData}
+            columns={columns}
+            pagination={false}
 
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
-      <AddProductModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
+            // rowClassName={() => "bg-gray-700 text-white"}
+          />
+        </div>
+        <AddProductModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      </ConfigProvider>
     </div>
   );
 }
@@ -63,7 +94,7 @@ const rawData = [
     serial: "001",
     productname: "Wireless Mouse",
     useremail: "mike@example.com",
-    filter: "Electronics",
+    filter: "Vice City",
     size: "Medium",
     filtermood: "Work",
     price: "$25.99",
@@ -74,7 +105,29 @@ const rawData = [
     serial: "002",
     productname: "Mechanical Keyboard",
     useremail: "john@example.com",
-    filter: "Accessories",
+    filter: "Zkittles",
+    size: "Full-size",
+    filtermood: "Gaming",
+    price: "$79.99",
+    description: "A mechanical keyboard with RGB backlight and fast response.",
+  },
+  {
+    key: "3",
+    serial: "003",
+    productname: "Mechanical Keyboard",
+    useremail: "john@example.com",
+    filter: "Zkittles",
+    size: "Full-size",
+    filtermood: "Gaming",
+    price: "$79.99",
+    description: "A mechanical keyboard with RGB backlight and fast response.",
+  },
+  {
+    key: "4",
+    serial: "004",
+    productname: "Mechanical Keyboard",
+    useremail: "john@example.com",
+    filter: "Vice City",
     size: "Full-size",
     filtermood: "Gaming",
     price: "$79.99",
