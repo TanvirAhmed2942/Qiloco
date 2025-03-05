@@ -84,8 +84,8 @@ export default function MonthlySale() {
             strokeWidth={0.2}
             vertical={false}
           />
-          <XAxis dataKey="name" />
-          <YAxis hide={false} />
+          <XAxis dataKey="name" className="text-[16px]" />
+          <YAxis hide={false} className="text-[16px]" />
           {/* <Tooltip cursor={{ fill: "transparent" }} /> */}
           <Tooltip
             content={<CustomTooltip />}

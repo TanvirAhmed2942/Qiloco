@@ -27,7 +27,7 @@ const Header = ({ toggleSidebar }) => {
       .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
   };
   return (
-    <div className="bg-[#232323] h-[80px] flex items-center px-6 shadow-md transition-all duration-300">
+    <div className="bg-[#232323] min-h-[80px] flex items-center px-6  transition-all duration-300">
       {/* Sidebar Toggle Button */}
       <CgMenu
         size={40}

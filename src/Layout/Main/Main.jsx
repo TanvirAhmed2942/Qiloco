@@ -18,7 +18,15 @@ const Main = () => {
       {/* Main Content */}
       <div className="flex flex-col flex-1 transition-all duration-300">
         <Header toggleSidebar={toggleSidebar} />
-        <div className="p-4 bg-quilocoS h-screen sm:h-screen">
+        <div
+          className="flex-1 p-4 bg-quilocoS overflow-auto [&::-webkit-scrollbar]:w-2
+                    [&::-webkit-scrollbar-track]:rounded-full
+                    [&::-webkit-scrollbar-track]:bg-gray-100
+                    [&::-webkit-scrollbar-thumb]:rounded-full
+                    [&::-webkit-scrollbar-thumb]:bg-gray-300
+                    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+        >
           <Outlet />
         </div>
       </div>
