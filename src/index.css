@@ -65,26 +65,6 @@ textarea::placeholder {
 .ant-card-body {
   background-color: #232323;
 }
-/* Pagination  */
-/* .ant-pagination .ant-pagination-item-active {
-  font-weight: 600;
-  background-color: #975cdb;
-  border: none !important;
-  color: #ffffff !important;
-} */
-
-/* Collapse */
-/* .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
-  margin-top: 20px;
-  color: #975cdb;
-  font-size: large;
-}
-:where(.css-dev-only-do-not-override-11lehqq).ant-collapse-borderless
-  > .ant-collapse-item
-  > .ant-collapse-content {
-  border-bottom: 2px solid #535353;
-  margin-left: 60px;
-} */
 
 /* ant design modal footer top margin remove */
 .ant-modal-footer {
@@ -114,13 +94,24 @@ textarea::placeholder {
 .ant-menu-light .ant-menu-item a:hover {
   color: white !important;
 }
+
+.ant-menu-inline-collapsed > .ant-menu-item .ant-menu-item-icon {
+  margin-top: 13px !important;
+  margin-left: -5px !important;
+}
+/* .ant-menu-submenu > .ant-menu-submenu-title .ant-menu-item-icon {
+   margin-top: 13px; 
+  margin-left: -5px !important;
+} */
+.ant-menu-inline-collapsed
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title
+  .ant-menu-item-icon {
+  margin-left: -4px !important;
+  margin-top: 13px;
+}
 /* .ant-menu-submenu .ant-menu-submenu-inline .ant-menu-submenu-open {
   background-color: #ffc301;
-} */
-
-/* .ant-menu-item {
-  background-color: #ffffff !important;
-  color: black !important;
 } */
 
 .ant-menu-item-selected {
@@ -135,6 +126,7 @@ textarea::placeholder {
   background-color: #18191b;
   margin: 20px 0px !important;
   height: 50px !important;
+  margin-left: 5px !important;
 }
 .ant-menu .ant-menu-item .ant-menu-item-icon + span {
   transition: none !important;
