@@ -22,6 +22,7 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
     name: "",
     description: "",
     price: "",
+    quality: "",
     quantity: "",
     moodTag: [],
     potency: "",
@@ -52,16 +53,29 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
 
     // Create the data object and append it to FormData
     const productData = {
+      // name: values.productName,
+      // description: values.productDescription,
+      // price: values.productPrice,
+      // quality: values.productQuality || "high",
+      // quantity: values.productQuantity || 10,
+      // potency: values.productPotency || "High",
+      // genetics: values.productGenetics || "Indica-dominant",
+      // origin: values.productOrigin || "California",
+      // type: values.productType || "Hybrid",
+      // scent: values.productScent || "Earthy",
+      // moodTag: values.filterMood || [],
+
       name: values.productName,
       description: values.productDescription,
       price: values.productPrice,
-      quantity: values.productQuantity || 10, // Default quantity if not provided
-      potency: values.productPotency || "High", // Default potency if not provided
-      genetics: values.productGenetics || "Indica-dominant", // Default genetics if not provided
-      origin: values.productOrigin || "California", // Default origin
-      type: values.productType || "Hybrid", // Default type
-      scent: values.productScent || "Earthy", // Default scent
-      moodTag: values.filterMood || [], // Assign the mood tags directly as an array
+      quality: values.productQuality, // Default quality if not provided
+      quantity: values.productQuantity, // Default quantity if not provided
+      potency: values.productPotency, // Default potency if not provided
+      genetics: values.productGenetics, // Default genetics if not provided
+      origin: values.productOrigin, // Default origin
+      type: values.productType, // Default type
+      scent: values.productScent, // Default scent
+      moodTag: values.filterMood, // Assign the mood tags directly as an array
     };
 
     // Append the 'data' object to the FormData
@@ -75,6 +89,7 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
     try {
       // Send data to the server using the mutation
       const response = await createProduct(formData).unwrap();
+      console.log(response);
       message.success("Product created successfully!");
 
       // Reset form and close modal after successful submission
@@ -119,6 +134,7 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
         width={1000}
         onCancel={handleCancel}
         footer={null}
+        centered
       >
         <Form
           form={form}
@@ -138,7 +154,7 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
               >
                 <Input
                   placeholder="Enter your product name"
-                  className="border-none h-12"
+                  className="border-none h-9"
                   style={{
                     background:
                       focusedField === "productName" ? "#e8f0fd" : "black",
@@ -170,18 +186,60 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
               </Form.Item>
 
               <Form.Item
-                label="Filter"
-                name="productFilter"
-                rules={[{ required: true, message: "Filter required!" }]}
+                label="Price"
+                name="productPrice"
+                rules={[{ required: true, message: "Product Price required!" }]}
               >
                 <Input
-                  placeholder="High"
-                  className="border-none h-12"
+                  placeholder="Enter your product price"
+                  className="border-none h-9"
                   style={{
                     background:
-                      focusedField === "productFilter" ? "#e8f0fd" : "black",
+                      focusedField === "productPrice" ? "#e8f0fd" : "black",
                   }}
-                  onFocus={() => setFocusedField("productFilter")}
+                  onFocus={() => setFocusedField("productPrice")}
+                  onBlur={() => setFocusedField(null)}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Quality"
+                name="productQuality"
+                rules={[
+                  { required: true, message: "Product Quality is required!" },
+                ]}
+              >
+                <Select
+                  defaultValue="high"
+                  className="w-full h-9"
+                  allowClear
+                  options={[
+                    {
+                      value: "high",
+                      label: "High",
+                    },
+                    {
+                      value: "medium",
+                      label: "Medium",
+                    },
+                  ]}
+                  placeholder="select it"
+                />
+              </Form.Item>
+              <Form.Item
+                label="Quantity"
+                name="productQuantity"
+                rules={[
+                  { required: true, message: "Product Quantity required!" },
+                ]}
+              >
+                <Input
+                  placeholder="2 pc"
+                  className="border-none h-9"
+                  style={{
+                    background:
+                      focusedField === "productQuantity" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productQuantity")}
                   onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
@@ -218,32 +276,15 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                label="Price"
-                name="productPrice"
-                rules={[{ required: true, message: "Product Price required!" }]}
-              >
+              <Form.Item label="Potency" name="productPotency">
                 <Input
-                  placeholder="Enter your product price"
-                  className="border-none h-12"
+                  placeholder="Enter your Product Potency"
+                  className="border-none h-9"
                   style={{
                     background:
-                      focusedField === "productPrice" ? "#e8f0fd" : "black",
+                      focusedField === "productPotency" ? "#e8f0fd" : "black",
                   }}
-                  onFocus={() => setFocusedField("productPrice")}
-                  onBlur={() => setFocusedField(null)}
-                />
-              </Form.Item>
-
-              <Form.Item label="Size (Optional)" name="productSize">
-                <Input
-                  placeholder="1kg"
-                  className="border-none h-12"
-                  style={{
-                    background:
-                      focusedField === "productSize" ? "#e8f0fd" : "black",
-                  }}
-                  onFocus={() => setFocusedField("productSize")}
+                  onFocus={() => setFocusedField("productPotency")}
                   onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
@@ -251,6 +292,70 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
 
             {/* Right Section (Upload) */}
             <div className="w-1/2">
+              <Form.Item
+                label="Genetics"
+                name="productGenetics"
+                rules={[{ required: true, message: "Genetics required!" }]}
+              >
+                <Input
+                  placeholder="Enter your Product Genetics"
+                  className="border-none h-9"
+                  style={{
+                    background:
+                      focusedField === "productGenetics" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productGenetics")}
+                  onBlur={() => setFocusedField(null)}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Origin"
+                name="productOrigin"
+                rules={[{ required: true, message: "Origin required!" }]}
+              >
+                <Input
+                  placeholder="Enter your Product Origin"
+                  className="border-none h-9"
+                  style={{
+                    background:
+                      focusedField === "productOrigin" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productOrigin")}
+                  onBlur={() => setFocusedField(null)}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Type"
+                name="productType"
+                rules={[{ required: true, message: "Type required!" }]}
+              >
+                <Input
+                  placeholder="Enter your Product Type"
+                  className="border-none h-9"
+                  style={{
+                    background:
+                      focusedField === "productType" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productType")}
+                  onBlur={() => setFocusedField(null)}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Scent"
+                name="productScent"
+                rules={[{ required: true, message: "Scent required!" }]}
+              >
+                <Input
+                  placeholder="Enter your Product Scent"
+                  className="border-none h-9"
+                  style={{
+                    background:
+                      focusedField === "productScent" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productScent")}
+                  onBlur={() => setFocusedField(null)}
+                />
+              </Form.Item>
               <h5 className="text-[18px] text-[#efefef] font-normal mb-1 ">
                 Product Gallery
               </h5>

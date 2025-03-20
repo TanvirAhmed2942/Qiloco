@@ -5,7 +5,7 @@ const productSlice = api.injectEndpoints({
     createProduct: builder.mutation({
       query: (data) => {
         return {
-          url: "/category/create-category",
+          url: "/api/v1/product/create",
           method: "POST",
           body: data,
         };
@@ -36,13 +36,8 @@ const productSlice = api.injectEndpoints({
     product: builder.query({
       query: () => {
         return {
-          url: "/category/get-category",
+          url: "/api/v1/product/",
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${JSON.parse(
-              localStorage.getItem("token")
-            )}`,
-          },
         };
       },
     }),
