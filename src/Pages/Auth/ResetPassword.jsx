@@ -1,13 +1,53 @@
 import { Button, Form, Input, ConfigProvider } from "antd";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useResetPasswordMutation } from "../../redux/apiSlices/authSlice";
 
 const ResetPassword = () => {
-  const email = new URLSearchParams(location.search).get("email");
+  const location = useLocation();
   const navigate = useNavigate();
+  const email = new URLSearchParams(location.search).get("email");
+
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onFinish = async (values) => {
-    navigate(`/auth/login`);
+    // const forgetOtpMatchToken = localStorage.getItem("forgetOtpMatchToken");
+    const resetToken = localStorage.getItem("verifyToken"); // ✅ VerifyToken is sent as resetToken
+
+    if (!email) {
+      setErrorMessage("Email is missing. Please restart the process.");
+      return;
+    }
+    // if (!forgetOtpMatchToken) {
+    //   setErrorMessage("OTP verification token is missing. Please try again.");
+    //   return;
+    // }
+    if (!resetToken) {
+      setErrorMessage("Reset token is missing. Please try again.");
+      return;
+    }
+
+    try {
+      const response = await resetPassword(
+        {
+          email,
+          newPassword: values.newPassword,
+          confirmPassword: values.confirmPassword,
+        },
+        {
+          headers: { resetToken }, // ✅ Send resetToken in headers
+        }
+      ).unwrap();
+
+      console.log("Password Reset Success:", response);
+      navigate(`/auth/login`);
+    } catch (err) {
+      console.error("Reset Password Failed:", err?.data?.message || err);
+      setErrorMessage(
+        err?.data?.message || "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -21,6 +61,11 @@ const ResetPassword = () => {
           <br /> from previous ones for security.
         </p>
       </div>
+
+      {errorMessage && (
+        <p className="text-red-500 text-center mb-4">{errorMessage}</p>
+      )}
+
       <ConfigProvider
         theme={{
           components: {
@@ -34,29 +79,16 @@ const ResetPassword = () => {
           <Form.Item
             name="newPassword"
             label={
-              <p
-                style={{
-                  display: "block",
-                }}
-                htmlFor="email"
-                className="text-base font-normal text-white"
-              >
-                New Password
-              </p>
+              <p className="text-base font-normal text-white">New Password</p>
             }
             rules={[
-              {
-                required: true,
-                message: "Please input your new Password!",
-              },
+              { required: true, message: "Please input your new Password!" },
             ]}
             style={{ marginBottom: 0 }}
           >
             <Input.Password
-              type="password"
-              placeholder="Enter New password"
+              placeholder="Enter new password"
               style={{
-                // border: "1px solid #E0E4EC",
                 border: "none",
                 height: "52px",
                 background: "#18191b",
@@ -69,26 +101,16 @@ const ResetPassword = () => {
           </Form.Item>
 
           <Form.Item
-            style={{ marginBottom: 0 }}
+            name="confirmPassword"
             label={
-              <p
-                style={{
-                  display: "block",
-                }}
-                htmlFor="email"
-                className="text-base text-white font-normal"
-              >
+              <p className="text-base text-white font-normal">
                 Confirm Password
               </p>
             }
-            name="confirmPassword"
             dependencies={["newPassword"]}
             hasFeedback
             rules={[
-              {
-                required: true,
-                message: "Please confirm your password!",
-              },
+              { required: true, message: "Please confirm your password!" },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("newPassword") === value) {
@@ -102,10 +124,8 @@ const ResetPassword = () => {
             ]}
           >
             <Input.Password
-              type="password"
-              placeholder="Enter Confirm password"
+              placeholder="Enter confirm password"
               style={{
-                // border: "1px solid #E0E4EC",
                 color: "white",
                 border: "none",
                 height: "52px",
@@ -124,14 +144,14 @@ const ResetPassword = () => {
                 width: "100%",
                 height: 45,
                 color: "white",
-                fontWeight: "400px",
                 fontSize: "18px",
                 border: "1px solid #a11d26",
-                background: "#a11d26 ",
+                background: "#a11d26",
                 marginTop: 20,
               }}
+              disabled={isLoading}
             >
-              Update
+              {isLoading ? "Updating..." : "Update"}
             </Button>
           </Form.Item>
         </Form>

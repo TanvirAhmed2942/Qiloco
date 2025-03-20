@@ -1,21 +1,89 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Select, Button, ConfigProvider } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Select,
+  Button,
+  ConfigProvider,
+  message,
+} from "antd";
 import UploadComponent from "./UploadComponent";
+import { useCreateProductMutation } from "../../../redux/apiSlices/productSlice";
 
 function AddProductModal({ isModalOpen, setIsModalOpen }) {
   const [form] = Form.useForm();
   const [uploadedFiles, setUploadedFiles] = useState([]); // Store uploaded images
+  const [focusedField, setFocusedField] = useState(null); // Track focused field
+  const [resetCounter, setResetCounter] = useState(0); // Add a reset counter
+  const [createProduct, { isLoading }] = useCreateProductMutation();
 
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const data = {
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    moodTag: [],
+    potency: "",
+    genetics: "",
+    origin: "",
+    type: "",
+    scent: "",
+  };
+
+  const resetForm = () => {
+    form.resetFields(); // Reset all input fields
+    setUploadedFiles([]); // Clear uploaded images
+    setResetCounter((prev) => prev + 1); // Increment reset counter to trigger child component reset
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    resetForm();
   };
 
-  const onFinish = (values) => {
-    console.log("Form Data:", { ...values, images: uploadedFiles }); // Include images in form data
+  const onFinish = async (values) => {
+    const formData = new FormData();
+
+    // Append the 'image' as a single file
+    if (uploadedFiles.length > 0) {
+      formData.append("image", uploadedFiles[0]);
+    }
+
+    // Create the data object and append it to FormData
+    const productData = {
+      name: values.productName,
+      description: values.productDescription,
+      price: values.productPrice,
+      quantity: values.productQuantity || 10, // Default quantity if not provided
+      potency: values.productPotency || "High", // Default potency if not provided
+      genetics: values.productGenetics || "Indica-dominant", // Default genetics if not provided
+      origin: values.productOrigin || "California", // Default origin
+      type: values.productType || "Hybrid", // Default type
+      scent: values.productScent || "Earthy", // Default scent
+      moodTag: values.filterMood || [], // Assign the mood tags directly as an array
+    };
+
+    // Append the 'data' object to the FormData
+    formData.append("data", JSON.stringify(productData));
+
+    // Console log the FormData content (for debugging purposes)
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    try {
+      // Send data to the server using the mutation
+      const response = await createProduct(formData).unwrap();
+      message.success("Product created successfully!");
+
+      // Reset form and close modal after successful submission
+      resetForm();
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Failed to create product:", error);
+      message.error("Failed to create product. Please try again.");
+    }
   };
 
   return (
@@ -48,7 +116,6 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
       <Modal
         title="Add Product Details"
         open={isModalOpen}
-        onOk={handleOk}
         width={1000}
         onCancel={handleCancel}
         footer={null}
@@ -63,7 +130,7 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
           {/* Two Sections Side by Side */}
           <div className="flex gap-4">
             {/* Left Section */}
-            <div className="w-1/2 bg-transparent  rounded-md">
+            <div className="w-1/2 bg-transparent rounded-md">
               <Form.Item
                 label="Product Name"
                 name="productName"
@@ -71,7 +138,13 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
               >
                 <Input
                   placeholder="Enter your product name"
-                  className="bg-black border-none h-12"
+                  className="border-none h-12"
+                  style={{
+                    background:
+                      focusedField === "productName" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productName")}
+                  onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
 
@@ -79,26 +152,37 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
                 label="Product Descriptions"
                 name="productDescription"
                 rules={[
-                  {
-                    required: true,
-                    message: "Product Description required!",
-                  },
+                  { required: true, message: "Product Description required!" },
                 ]}
               >
                 <Input.TextArea
                   placeholder="Write product description"
-                  className="bg-black border-none"
+                  className="border-none"
+                  style={{
+                    background:
+                      focusedField === "productDescription"
+                        ? "#e8f0fd"
+                        : "black",
+                  }}
+                  onFocus={() => setFocusedField("productDescription")}
+                  onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
 
               <Form.Item
                 label="Filter"
-                name="filter"
+                name="productFilter"
                 rules={[{ required: true, message: "Filter required!" }]}
               >
                 <Input
                   placeholder="High"
-                  className="bg-black border-none h-12"
+                  className="border-none h-12"
+                  style={{
+                    background:
+                      focusedField === "productFilter" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productFilter")}
+                  onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
 
@@ -113,7 +197,17 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
                   },
                 ]}
               >
-                <Select mode="multiple" placeholder="[Tag]">
+                <Select
+                  mode="multiple"
+                  placeholder="[Tag]"
+                  className="border-none"
+                  style={{
+                    background:
+                      focusedField === "filterMood" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("filterMood")}
+                  onBlur={() => setFocusedField(null)}
+                >
                   <Select.Option value="Chill">Chill</Select.Option>
                   <Select.Option value="Soothing">Soothing</Select.Option>
                   <Select.Option value="Euphoric">Euphoric</Select.Option>
@@ -131,14 +225,26 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
               >
                 <Input
                   placeholder="Enter your product price"
-                  className="bg-black border-none h-12"
+                  className="border-none h-12"
+                  style={{
+                    background:
+                      focusedField === "productPrice" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productPrice")}
+                  onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
 
               <Form.Item label="Size (Optional)" name="productSize">
                 <Input
                   placeholder="1kg"
-                  className="bg-black border-none h-12"
+                  className="border-none h-12"
+                  style={{
+                    background:
+                      focusedField === "productSize" ? "#e8f0fd" : "black",
+                  }}
+                  onFocus={() => setFocusedField("productSize")}
+                  onBlur={() => setFocusedField(null)}
                 />
               </Form.Item>
             </div>
@@ -148,20 +254,23 @@ function AddProductModal({ isModalOpen, setIsModalOpen }) {
               <h5 className="text-[18px] text-[#efefef] font-normal mb-1 ">
                 Product Gallery
               </h5>
-              <UploadComponent onFileUpload={setUploadedFiles} />
-              {/* Receive uploaded images */}
+              <UploadComponent
+                onFileUpload={setUploadedFiles}
+                resetTrigger={resetCounter}
+              />
             </div>
           </div>
 
           {/* Full-Width Submit Button */}
-          <Form.Item className="">
-            <button
+          <Form.Item>
+            <Button
               type="primary"
               htmlType="submit"
-              className="w-full h-12 bg-quilocoD hover:bg-quilocoD/90 text-white text-[18px] font-medium rounded-lg "
+              loading={isLoading}
+              className="w-full h-12 bg-quilocoD hover:bg-quilocoD/90 text-white text-[18px] font-medium rounded-lg"
             >
               Submit
-            </button>
+            </Button>
           </Form.Item>
         </Form>
       </Modal>

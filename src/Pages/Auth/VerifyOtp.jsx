@@ -1,19 +1,80 @@
 import { Button, Form, Typography } from "antd";
 import React, { useState } from "react";
 import OTPInput from "react-otp-input";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useOtpVerifyMutation,
+  useForgotPasswordMutation,
+} from "../../redux/apiSlices/authSlice";
+
 const { Text } = Typography;
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState();
+  const location = useLocation();
   const email = new URLSearchParams(location.search).get("email");
 
-  const onFinish = async (values) => {
-    navigate(`/auth/reset-password?email=${email}`);
+  const [otp, setOtp] = useState("");
+  const [otpVerify, { isLoading }] = useOtpVerifyMutation();
+  const [forgotPassword, { isLoading: resendLoading }] =
+    useForgotPasswordMutation();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleOtpChange = (value) => {
+    console.log("Current OTP input:", value);
+    setOtp(value);
   };
 
-  const handleResendEmail = async () => {};
+  const onFinish = async () => {
+    console.log("Raw OTP string:", otp);
+
+    if (otp.length !== 4) {
+      setErrorMessage("OTP must be 4 digits");
+      return;
+    }
+
+    if (!email) {
+      setErrorMessage("Email is missing. Please try again.");
+      return;
+    }
+
+    try {
+      const response = await otpVerify({
+        email,
+        oneTimeCode: Number(otp), // ✅ Convert OTP to number before sending
+      }).unwrap();
+
+      console.log("OTP Verification Success:", response);
+
+      if (response?.success) {
+        localStorage.setItem("verifyToken", response?.data?.verifyToken);
+        navigate(`/auth/reset-password?email=${email}`);
+      } else {
+        setErrorMessage(response?.message || "OTP verification failed.");
+      }
+    } catch (err) {
+      console.error("OTP Verification Failed:", err?.data?.message || err);
+      setErrorMessage(
+        err?.data?.message || "Something went wrong. Please try again."
+      );
+    }
+  };
+
+  const handleResendEmail = async () => {
+    if (!email) {
+      setErrorMessage("Email is missing. Cannot resend OTP.");
+      return;
+    }
+
+    try {
+      await forgotPassword({ email }).unwrap();
+      console.log("OTP Resent Successfully");
+      setErrorMessage(""); // Clear previous errors
+    } catch (err) {
+      console.error("OTP Resend Failed:", err?.data?.message || err);
+      setErrorMessage(err?.data?.message || "Failed to resend OTP.");
+    }
+  };
 
   return (
     <div>
@@ -27,12 +88,16 @@ const VerifyOtp = () => {
         </p>
       </div>
 
+      {errorMessage && (
+        <p className="text-red-500 text-center mb-4">{errorMessage}</p>
+      )}
+
       <Form layout="vertical" onFinish={onFinish}>
         <div className="flex items-center justify-center mb-6">
           <OTPInput
             value={otp}
-            onChange={setOtp}
-            numInputs={4}
+            onChange={handleOtpChange}
+            numInputs={4} // OTP length fixed to 4
             inputStyle={{
               height: 50,
               width: 50,
@@ -40,7 +105,7 @@ const VerifyOtp = () => {
               borderRadius: "8px",
               margin: "16px",
               fontSize: "20px",
-              border: "1px solid #a11d26 ",
+              border: "1px solid #a11d26",
               color: "white",
               outline: "none",
               marginBottom: 10,
@@ -49,15 +114,18 @@ const VerifyOtp = () => {
           />
         </div>
 
-        <div className="flex items-center justify-between mb-6 ">
-          <Text className="text-[#A3A3A3]">Don't received code?</Text>
+        <div className="flex items-center justify-between mb-6">
+          <Text className="text-[#A3A3A3]">Didn't receive the code?</Text>
 
           <p
             onClick={handleResendEmail}
-            className="login-form-forgot  font-medium cursor-pointer"
-            // style={{ color: "#ffffff ", cursor: "pointer" }}
+            className="login-form-forgot font-medium cursor-pointer"
+            style={{
+              opacity: resendLoading ? 0.6 : 1,
+              pointerEvents: resendLoading ? "none" : "auto",
+            }}
           >
-            Resend
+            {resendLoading ? "Resending..." : "Resend"}
           </p>
         </div>
 
@@ -67,14 +135,15 @@ const VerifyOtp = () => {
             style={{
               width: "100%",
               height: 45,
-              border: "1px solid #a11d26 ",
+              border: "1px solid #a11d26",
               outline: "none",
               boxShadow: "none",
-              background: "#a11d26 ",
+              background: "#a11d26",
               color: "white",
             }}
+            disabled={isLoading}
           >
-            Verify
+            {isLoading ? "Verifying..." : "Verify"}
           </Button>
         </Form.Item>
       </Form>

@@ -2,105 +2,71 @@ import React from "react";
 import { Table, Avatar, ConfigProvider } from "antd";
 import { IoEye } from "react-icons/io5";
 import productImg from "../../../assets/quiloco/productImg.png";
-
-const rawData = [
-  {
-    key: "1",
-    serial: "001",
-    productname: "Wireless Mouse",
-    useremail: "mike@example.com",
-    date: "2025-02-24",
-    amount: "$25.99",
-    pic: productImg, // Example image for all
-  },
-  {
-    key: "2",
-    serial: "002",
-    productname: "Mechanical Keyboard",
-    useremail: "john@example.com",
-    date: "2025-02-23",
-    amount: "$79.99",
-    pic: productImg,
-  },
-  {
-    key: "3",
-    serial: "003",
-    productname: "Gaming Headset",
-    useremail: "sara@example.com",
-    date: "2025-02-22",
-    amount: "$59.99",
-    pic: productImg,
-  },
-  {
-    key: "4",
-    serial: "004",
-    productname: "USB-C Hub",
-    useremail: "dave@example.com",
-    date: "2025-02-21",
-    amount: "$39.99",
-    pic: productImg,
-  },
-  {
-    key: "5",
-    serial: "005",
-    productname: "Webcam 1080p",
-    useremail: "emma@example.com",
-    date: "2025-02-20",
-    amount: "$49.99",
-    pic: productImg,
-  },
-];
-
-// Add "#" to serial numbers using map
-const dataSource = rawData.map((item) => ({
-  ...item,
-  serial: `#${item.serial}`,
-}));
-
-const columns = [
-  {
-    title: "Serial",
-    dataIndex: "serial",
-    key: "serial",
-  },
-  {
-    title: "Product Name",
-    dataIndex: "productname",
-    key: "productname",
-    render: (_, record) => (
-      <div className="flex items-center gap-2">
-        <Avatar shape="square" size="default" src={record.pic} />
-        <span>{record.productname}</span>
-      </div>
-    ),
-  },
-  {
-    title: "User Email",
-    dataIndex: "useremail",
-    key: "useremail",
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: () => (
-      <a href="#" className="hover:text-[#a11d26]">
-        <IoEye size={24} />
-      </a>
-    ),
-  },
-];
+import { useGetRecentProductQuery } from "../../../redux/apiSlices/overViewSlice";
 
 function RecentSellingProduct() {
+  const { data, isLoading, isError } = useGetRecentProductQuery();
+
+  // Ensure data is available
+  const earnings = data?.data?.earnings || [];
+
+  // Format data for the table
+  const dataSource = earnings.map((item, index) => ({
+    key: item._id,
+    serial: `#${index + 1}`,
+    productName: item.productName || "N/A", // Provide fallback if missing
+    email: item.email,
+    createdAt: new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(new Date(item.createdAt)),
+    totalPrice: `$${item.totalPrice.toLocaleString()}`,
+  }));
+
+  const columns = [
+    {
+      title: "SL#",
+      dataIndex: "serial",
+      key: "serial",
+    },
+    {
+      title: "Product Name",
+      dataIndex: "productName",
+      key: "productName",
+      render: (text) => (
+        <div className="flex items-center gap-2">
+          <Avatar shape="square" size="default" src={productImg} />
+          <span>{text}</span>
+        </div>
+      ),
+    },
+    {
+      title: "User Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+    },
+    {
+      title: "Amount",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: () => (
+        <a href="#" className="hover:text-[#a11d26]">
+          <IoEye size={24} />
+        </a>
+      ),
+    },
+  ];
+
   return (
     <ConfigProvider
       theme={{
@@ -117,7 +83,12 @@ function RecentSellingProduct() {
         },
       }}
     >
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        loading={isLoading}
+        pagination={false}
+      />
     </ConfigProvider>
   );
 }

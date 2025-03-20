@@ -23,6 +23,7 @@ import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails.jsx";
 import Earnings from "../Pages/Dashboard/Earnings/Earnings.jsx";
 import ReturnPolicy from "../Pages/Dashboard/Policy/ReturnPolicy.jsx";
 import PrivacyPolicy from "../Pages/Dashboard/Policy/PrivacyPolicy.jsx";
+import RecentSellingProduct from "../Pages/Dashboard/RecentSellingProduct/RecentSellingProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/recent-selling-products",
+        element: <RecentSellingProduct />,
       },
 
       {

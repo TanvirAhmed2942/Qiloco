@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Upload, Image, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RiUploadCloud2Line } from "react-icons/ri";
 
-const UploadComponent = ({ onFileUpload }) => {
+const UploadComponent = ({ onFileUpload, resetTrigger = 0 }) => {
   const [fileList, setFileList] = useState([]);
+
+  // Reset fileList when resetTrigger changes
+  useEffect(() => {
+    if (resetTrigger > 0) {
+      setFileList([]);
+    }
+  }, [resetTrigger]);
 
   const handleChange = ({ fileList }) => {
     setFileList(fileList);
@@ -31,9 +38,7 @@ const UploadComponent = ({ onFileUpload }) => {
   return (
     <div>
       {/* Upload Component */}
-
       <Upload
-        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
         listType="picture-card"
         fileList={fileList}
         onChange={handleChange}

@@ -2,14 +2,27 @@ import { Button, Checkbox, Form, Input, ConfigProvider } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import FormItem from "../../components/common/FormItem";
-// import Cookies from "js-cookie";
+import { useLoginMutation } from "../../redux/apiSlices/authSlice";
+import Spinner from "../../components/common/Spinner";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [login, { isLoading, error }] = useLoginMutation();
 
   const onFinish = async (values) => {
-    navigate("/");
-    // Cookies.set('token', token, { expires: 7 })
+    console.log(values);
+    try {
+      const response = await login({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+
+      console.log("Login Success:", response?.data);
+      localStorage.setItem("token", response?.data?.token);
+      navigate("/");
+    } catch (err) {
+      console.error("Login Failed:", err);
+    }
   };
 
   return (
@@ -111,7 +124,8 @@ const Login = () => {
               }}
               className="flex items-center justify-center bg-quilocoD hover:bg-quilocoD/90 rounded-lg text-base"
             >
-              {/* {isLoading? < Spinner/> : "Sign in"} */} Sign in
+              {isLoading ? <Spinner /> : "Sign in"}
+              {/* Sign in */}
             </button>
           </Form.Item>
         </Form>
