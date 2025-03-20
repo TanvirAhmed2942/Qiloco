@@ -246,7 +246,7 @@ function OrderDetails() {
             <Table
               dataSource={dataSource}
               columns={columns}
-              pagination={{ pageSize: 1 }}
+              pagination={{ pageSize: 5 }}
             />
           </div>
         </ConfigProvider>

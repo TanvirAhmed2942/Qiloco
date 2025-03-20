@@ -5,6 +5,8 @@
 // import AddProductModal from "./AddProductModal";
 // import { SearchOutlined } from "@ant-design/icons"; // Corrected import
 // import { useProductQuery } from "../../../redux/apiSlices/productSlice";
+// import { imageUrl } from "../../../redux/api/baseApi";
+// import { getImageUrl } from "../../../components/common/ImageUrl";
 
 // function Products() {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,19 +18,8 @@
 //     isSuccess,
 //   } = useProductQuery();
 
-//   // Extracting and formatting the data for the table
-//   const rawData = product?.data?.products;
-//   const dataSource = rawData?.map((item) => ({
-//     key: item._id, // Use _id as the unique key
-//     serial: `#${item._id.slice(-4)}`, // Generating a serial number using last 4 chars of _id
-//     productname: item.name,
-//     filter: item.moodTag.join(", "), // Joining mood tags with commas
-//     size: item.quality, // Assuming size is mapped to 'quality' field
-//     filtermood: item.moodTag.join(", "), // Showing the same as filter
-//     price: `$${item.price}`,
-//     description: item.description,
-//     image: item.image[0], // Using the first image in the array
-//   }));
+//   // If data is not loaded, show an empty array or a fallback
+//   const rawData = product?.data?.products || [];
 
 //   const showModal = () => {
 //     setIsModalOpen(true);
@@ -39,33 +30,37 @@
 //       title: "SL#",
 //       dataIndex: "serial",
 //       key: "serial",
-//       render: (item, record, index) => <>#{index + 1}</>,
+//       render: (text, record, index) => <>#{index + 1}</>,
 //     },
 //     {
 //       title: "Product Name",
-//       dataIndex: "productname",
-//       key: "productname",
+//       dataIndex: "name",
+//       key: "name",
 //       render: (_, record) => (
 //         <div className="flex items-center gap-2">
-//           <Avatar shape="square" size="default" src={record.image} />
-//           <span>{record.productname}</span>
+//           <Avatar
+//             shape="square"
+//             size="default"
+//             src={getImageUrl(record?.image[0])}
+//           />
+//           <span>{record.name}</span>
 //         </div>
 //       ),
 //     },
 //     {
 //       title: "Filter",
-//       dataIndex: "filter",
-//       key: "filter",
+//       dataIndex: "quality",
+//       key: "quality",
 //     },
 //     {
-//       title: "Size",
-//       dataIndex: "size",
-//       key: "size",
+//       title: "Quantity",
+//       dataIndex: "quantity",
+//       key: "quantity",
 //     },
 //     {
 //       title: "Filter by mood",
-//       dataIndex: "filtermood",
-//       key: "filtermood",
+//       dataIndex: "moodTag",
+//       key: "moodTag",
 //     },
 //     {
 //       title: "Price",
@@ -129,12 +124,13 @@
 //         </div>
 
 //         <div className="custom-table">
-//           {/* Show all products without filtering */}
+//           {/* Show all products directly */}
 //           <Table
-//             dataSource={dataSource}
+//             dataSource={rawData}
 //             columns={columns}
 //             pagination={true}
 //             loading={isLoading || isFetching}
+//             rowKey="_id" // Use _id as the unique key
 //           />
 //         </div>
 //         <AddProductModal
@@ -153,11 +149,16 @@ import { Table, Avatar, ConfigProvider, Input } from "antd";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoEye } from "react-icons/io5";
 import AddProductModal from "./AddProductModal";
-import { SearchOutlined } from "@ant-design/icons"; // Corrected import
+import ProductDetailsModal from "./ProductDetailsModal"; // Import the ProductDetailsModal
+import { SearchOutlined } from "@ant-design/icons";
 import { useProductQuery } from "../../../redux/apiSlices/productSlice";
+import { getImageUrl } from "../../../components/common/ImageUrl";
 
 function Products() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   const {
     data: product,
     isLoading,
@@ -173,6 +174,11 @@ function Products() {
     setIsModalOpen(true);
   };
 
+  const showDetailsModal = (record) => {
+    setSelectedProduct(record);
+    setIsDetailsModalOpen(true);
+  };
+
   const columns = [
     {
       title: "SL#",
@@ -182,24 +188,28 @@ function Products() {
     },
     {
       title: "Product Name",
-      dataIndex: "productname",
-      key: "productname",
+      dataIndex: "name",
+      key: "name",
       render: (_, record) => (
         <div className="flex items-center gap-2">
-          <Avatar shape="square" size="default" src={record.image[0]} />
-          <span>{record.productname}</span>
+          <Avatar
+            shape="square"
+            size="default"
+            src={getImageUrl(record?.image[0])}
+          />
+          <span>{record.name}</span>
         </div>
       ),
     },
     {
       title: "Filter",
-      dataIndex: "filter",
-      key: "filter",
+      dataIndex: "quality",
+      key: "quality",
     },
     {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
       title: "Filter by mood",
@@ -219,8 +229,15 @@ function Products() {
     {
       title: "Action",
       key: "action",
-      render: () => (
-        <a href="#" className="hover:text-[#a11d26]">
+      render: (_, record) => (
+        <a
+          href="#"
+          className="hover:text-[#a11d26]"
+          onClick={(e) => {
+            e.preventDefault();
+            showDetailsModal(record);
+          }}
+        >
           <IoEye size={24} />
         </a>
       ),
@@ -280,6 +297,11 @@ function Products() {
         <AddProductModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+        />
+        <ProductDetailsModal
+          isModalOpen={isDetailsModalOpen}
+          setIsModalOpen={setIsDetailsModalOpen}
+          product={selectedProduct}
         />
       </div>
     </ConfigProvider>
